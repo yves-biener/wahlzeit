@@ -132,6 +132,11 @@ public class Photo extends DataObject {
 	Key parent = ObjectManager.applicationRootKey;
 
 	/**
+	 * Location
+	 */
+	protected Location location;
+
+	/**
 	 *
 	 */
 	public Photo() {
@@ -417,5 +422,21 @@ public class Photo extends DataObject {
 	public void setNoNewPraise() {
 		noVotesAtLastNotification = noVotes;
 		incWriteCount();
+	}
+
+	/**
+	 * set the location of this photo
+	 * @param location of this photo's instance
+	 */
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	/**
+	 * get Location of this Photo
+	 * @return Location
+	 */
+	public Location getLocation() {
+		return location;
 	}
 }
