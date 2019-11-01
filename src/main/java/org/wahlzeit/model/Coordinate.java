@@ -1,6 +1,7 @@
 package org.wahlzeit.model;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Coordinate {
     /**
@@ -34,6 +35,7 @@ public class Coordinate {
                 Math.pow(this.z - otherCoordinates[2], 2));
     }
 
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) return false;
         if (obj.getClass() == this.getClass()) {
@@ -41,6 +43,11 @@ public class Coordinate {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, z);
     }
 
     /**

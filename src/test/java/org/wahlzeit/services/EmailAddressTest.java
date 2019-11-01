@@ -21,50 +21,59 @@
 package org.wahlzeit.services;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Test cases for the EmailAddress class.
  */
 public class EmailAddressTest extends TestCase {
 
-	/**
-	 *
-	 */
-	public EmailAddressTest(String name) {
-		super(name);
-	}
+    /**
+     *
+     */
+    public EmailAddressTest(String name) {
+        super(name);
+    }
 
-	/**
-	 *
-	 */
-	public void testGetEmailAddressFromString() {
-		// invalid email addresses are allowed for local testing and online avoided by Google
+    /**
+     *
+     */
+    public void testGetEmailAddressFromString() {
+        // invalid email addresses are allowed for local testing and online avoided by Google
 
-		assertTrue(createEmailAddressIgnoreException("bingo@bongo"));
-		assertTrue(createEmailAddressIgnoreException("bingo@bongo.com"));
-		assertTrue(createEmailAddressIgnoreException("bingo.bongo@bongo.com"));
-		assertTrue(createEmailAddressIgnoreException("bingo+bongo@bango"));
-	}
+        assertTrue(createEmailAddressIgnoreException("bingo@bongo"));
+        assertTrue(createEmailAddressIgnoreException("bingo@bongo.com"));
+        assertTrue(createEmailAddressIgnoreException("bingo.bongo@bongo.com"));
+        assertTrue(createEmailAddressIgnoreException("bingo+bongo@bango"));
+    }
 
-	/**
-	 *
-	 */
-	protected boolean createEmailAddressIgnoreException(String ea) {
-		try {
-			EmailAddress.getFromString(ea);
-			return true;
-		} catch (IllegalArgumentException ex) {
-			// creation failed
-			return false;
-		}
-	}
+    /**
+     *
+     */
+    protected boolean createEmailAddressIgnoreException(String ea) {
+        try {
+            EmailAddress.getFromString(ea);
+            return true;
+        } catch (IllegalArgumentException ex) {
+            // creation failed
+            return false;
+        }
+    }
 
-	/**
-	 *
-	 */
-	public void testEmptyEmailAddress() {
-		assertFalse(EmailAddress.EMPTY.isValid());
-	}
+    /**
+     *
+     */
+    public void testEmptyEmailAddress() {
+        assertFalse(EmailAddress.EMPTY.isValid());
+    }
+
+    @Test
+    public void testEmailAddressEquality() {
+        EmailAddress emailAddress = new EmailAddress("bingo@bongo.com");
+        assertTrue(emailAddress.isEqual(emailAddress));
+        assertFalse(emailAddress.isEqual(null));
+        assertFalse(emailAddress.isEqual(EmailAddress.EMPTY));
+    }
 
 }
 

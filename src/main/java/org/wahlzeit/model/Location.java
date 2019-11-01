@@ -2,12 +2,6 @@ package org.wahlzeit.model;
 
 public class Location {
     /**
-     * Empty Constructor of this class
-     */
-    public Location() {
-    }
-
-    /**
      * Constructor of this class
      *
      * @param name
@@ -15,6 +9,7 @@ public class Location {
      */
     public Location(String name, Coordinate coordinate) {
         this.name = name;
+        if (coordinate == null) throw new IllegalArgumentException("Coordiante can not be null");
         this.coordinate = coordinate;
     }
 
@@ -53,6 +48,7 @@ public class Location {
      * setter of this Location's Coordinate
      */
     public void setCoordinate(Coordinate coordinate) {
+        if (coordinate == null) throw new IllegalArgumentException("Coordiante can not be null");
         this.coordinate = coordinate;
     }
 }
