@@ -59,7 +59,17 @@ public class EmailServiceTest {
 	}
 
 	@Test(expected = MailingException.class)
-	public void testSendInvalidEmailWithError() throws MailingException {
+	public void testSendInvalidEmailWithErrorToNull() throws MailingException {
 		emailService.sendEmail(validAddress, null, "hi", "test");
+	}
+
+	@Test(expected = MailingException.class)
+	public void testSendInvalidEmailWithErrorFromNull() throws MailingException {
+		emailService.sendEmail(null, validAddress, "hi", "test");
+	}
+
+	@Test(expected = MailingException.class)
+	public void testSendInvalidEmailWithErrorFromAndToNull() throws MailingException {
+		emailService.sendEmail(null, null, "hi", "test");
 	}
 }
