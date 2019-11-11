@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class ArtPhotoManager extends PhotoManager {
 
-    protected static final ArtPhotoManager instance = new ArtPhotoManager();
+    protected static ArtPhotoManager instance = new ArtPhotoManager();
 
     private static final Logger log = Logger.getLogger(ArtPhotoManager.class.getName());
 

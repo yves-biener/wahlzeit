@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 public class ArtPhotoFactory extends PhotoFactory {
 
-    private static final Logger log = Logger.getLogger(PhotoFactory.class.getName());
+    private static final Logger log = Logger.getLogger(ArtPhotoFactory.class.getName());
     private static ArtPhotoFactory instance = null;
 
     protected ArtPhotoFactory() { }
