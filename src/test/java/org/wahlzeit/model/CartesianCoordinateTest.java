@@ -5,34 +5,50 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Test class for {@link Coordinate}.
+ * Test class for {@link CartesianCoordinate}.
  */
-public class CoordinateTest {
+public class CartesianCoordinateTest {
     @Test
     public void testDistance() {
-        Coordinate coordinate1 = new Coordinate(0,0,3);
-        Coordinate coordinate2 = new Coordinate(2,2,2);
-        Coordinate coordinate3 = new Coordinate(0,0,-1);
-        assertEquals(coordinate1.getDistance(coordinate2), 3, 1e-15);
-        assertEquals(coordinate2.getDistance(coordinate1), 3, 1e-15);
-        assertEquals(coordinate1.getDistance(coordinate3), 4, 1e-15);
-        assertEquals(coordinate3.getDistance(coordinate1), 4, 1e-15);
-        Coordinate coordinate4 = new Coordinate(0,0,0);
-        assertEquals(coordinate4.getDistance(coordinate4), 0, 1e-15);
+        CartesianCoordinate cartesianCoordinate1 = new CartesianCoordinate(0,0,3);
+        CartesianCoordinate cartesianCoordinate2 = new CartesianCoordinate(2,2,2);
+        CartesianCoordinate cartesianCoordinate3 = new CartesianCoordinate(0,0,-1);
+        assertEquals(3, cartesianCoordinate1.getCartesianDistance(cartesianCoordinate2),1e-15);
+        assertEquals(3, cartesianCoordinate2.getCartesianDistance(cartesianCoordinate1),1e-15);
+        assertEquals(4, cartesianCoordinate1.getCartesianDistance(cartesianCoordinate3),1e-15);
+        assertEquals(4, cartesianCoordinate3.getCartesianDistance(cartesianCoordinate1),1e-15);
+        CartesianCoordinate cartesianCoordinate4 = new CartesianCoordinate(0,0,0);
+        assertEquals(0, cartesianCoordinate4.getCartesianDistance(cartesianCoordinate4),1e-15);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testDistanceWithNull() {
-        Coordinate coordinate = new Coordinate(1,2,3);
-        assertEquals(coordinate.getDistance(null), 4, 1e-15);
+        CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(1,2,3);
+        assertEquals(4, cartesianCoordinate.getCartesianDistance(null),1e-15);
+    }
+
+    @Test
+    public void testAsSphericCoordinate() {
+        CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(0,0,0);
+        SphericalCoordinate sphericalCoordinate = new SphericalCoordinate(0,0,0);
+        assertEquals(cartesianCoordinate.asSphericalCoordinate(), sphericalCoordinate);
+        assertEquals(sphericalCoordinate, cartesianCoordinate.asSphericalCoordinate());
+        cartesianCoordinate = new CartesianCoordinate(1, 0,0);
+        sphericalCoordinate = new SphericalCoordinate(1, 0,Math.PI / 2);
+        assertEquals(cartesianCoordinate.asSphericalCoordinate(), sphericalCoordinate);
+        assertEquals(sphericalCoordinate, cartesianCoordinate.asSphericalCoordinate());
+        cartesianCoordinate = new CartesianCoordinate(0,1,0);
+        sphericalCoordinate = new SphericalCoordinate(1, Math.PI / 2, Math.PI / 2);
+        assertEquals(cartesianCoordinate.asSphericalCoordinate(), sphericalCoordinate);
+        assertEquals(sphericalCoordinate, cartesianCoordinate.asSphericalCoordinate());
     }
 
     @Test
     public void testEquality() {
-        Coordinate coordinate = new Coordinate(1,2,3);
-        Coordinate coordinate1 = new Coordinate(1,2,1);
-        assertEquals(coordinate, coordinate);
-        assertNotEquals(coordinate, coordinate1);
-        assertNotEquals(coordinate, null);
+        CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(1,2,3);
+        CartesianCoordinate cartesianCoordinate1 = new CartesianCoordinate(1,2,1);
+        assertEquals(cartesianCoordinate, cartesianCoordinate);
+        assertNotEquals(cartesianCoordinate, cartesianCoordinate1);
+        assertNotEquals(cartesianCoordinate, null);
     }
 }

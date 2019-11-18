@@ -7,7 +7,7 @@ public class Location {
      * @param name
      * @param coordinate
      */
-    public Location(String name, Coordinate coordinate) {
+    public Location(String name, ICoordinate coordinate) {
         this.name = name;
         if (coordinate == null) throw new IllegalArgumentException("Coordiante can not be null");
         this.coordinate = coordinate;
@@ -21,7 +21,7 @@ public class Location {
     /**
      * Coordinate associated with this Location (aggregation)
      */
-    protected Coordinate coordinate;
+    protected ICoordinate coordinate;
 
     /**
      * getter of this Location's name
@@ -40,14 +40,14 @@ public class Location {
     /**
      * getter of this Location's Coordinate
      */
-    public Coordinate getCoordinate() {
+    public ICoordinate getCoordinate() {
         return this.coordinate;
     }
 
     /**
      * setter of this Location's Coordinate
      */
-    public void setCoordinate(Coordinate coordinate) {
+    public void setCoordinate(ICoordinate coordinate) {
         if (coordinate == null) throw new IllegalArgumentException("Coordiante can not be null");
         this.coordinate = coordinate;
     }
