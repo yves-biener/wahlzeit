@@ -8,7 +8,7 @@ import org.wahlzeit.model.persistence.PersistenceTests;
 @Suite.SuiteClasses({
         AccessRightsTest.class,
         CartesianCoordinateTest.class,
-        SphericalCoordinate.class,
+        SphericalCoordinateTest.class,
         FlagReasonTest.class,
         GenderTest.class,
         GuestTest.class,
