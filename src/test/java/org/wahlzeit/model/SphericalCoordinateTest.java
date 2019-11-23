@@ -9,47 +9,53 @@ import static org.junit.Assert.*;
  */
 public class SphericalCoordinateTest {
     @Test
-    public void testCentralAngle() {
-        SphericalCoordinate sphericalCoordinate1 = new SphericalCoordinate(1, Math.PI/ 2, Math.PI/2); // [0,1,0]
-        SphericalCoordinate sphericalCoordinate2 = new SphericalCoordinate(1, 0, Math.PI / 2); // [1,0,0]
-        SphericalCoordinate sphericalCoordinate3 = new SphericalCoordinate(1, 0,0); // [0,0,1]
-        assertEquals(0, sphericalCoordinate1.getCentralAngle(sphericalCoordinate1), 1e-15);
-        assertEquals(Math.PI / 2, sphericalCoordinate1.getCentralAngle(sphericalCoordinate2),1e-15);
-        assertEquals(Math.PI / 2, sphericalCoordinate1.getCentralAngle(sphericalCoordinate3),1e-15);
-        assertEquals(Math.PI / 2, sphericalCoordinate3.getCentralAngle(sphericalCoordinate2), 1e-15);
-        assertEquals(Math.PI / 2, sphericalCoordinate2.getCentralAngle(sphericalCoordinate3), 1e-15);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testCentralAngleWithNull() {
-        SphericalCoordinate sphericalCoordinate = new SphericalCoordinate(1, 0,0);
-        assertEquals(0, sphericalCoordinate.getCentralAngle(null), 1e-15);
-    }
-
-    @Test
     public void testAsCartesianCoordinate() {
+        //Arrange
         SphericalCoordinate sphericalCoordinate1 = new SphericalCoordinate(1, Math.PI/ 2, Math.PI/2); // [0,1,0]
         SphericalCoordinate sphericalCoordinate2 = new SphericalCoordinate(1, 0, Math.PI / 2); // [1,0,0]
         SphericalCoordinate sphericalCoordinate3 = new SphericalCoordinate(1, 0,0); // [0,0,1]
+
         CartesianCoordinate cartesianCoordinate1 = new CartesianCoordinate(0,1,0);
         CartesianCoordinate cartesianCoordinate2 = new CartesianCoordinate(1,0,0);
         CartesianCoordinate cartesianCoordinate3 = new CartesianCoordinate(0,0,1);
-        assertEquals(sphericalCoordinate1.asCartesianCoordinate(), cartesianCoordinate1);
-        assertEquals(sphericalCoordinate2.asCartesianCoordinate(), cartesianCoordinate2);
-        assertEquals(sphericalCoordinate3.asCartesianCoordinate(), cartesianCoordinate3);
+
+        //Act
+        CartesianCoordinate spherical1ToCartesian1 = sphericalCoordinate1.asCartesianCoordinate();
+        CartesianCoordinate spherical2ToCartesian2 = sphericalCoordinate2.asCartesianCoordinate();
+        CartesianCoordinate spherical3ToCartesian3 = sphericalCoordinate3.asCartesianCoordinate();
+
+        //Assert
+        assertEquals(spherical1ToCartesian1.getX(), cartesianCoordinate1.getX(), 1e-15);
+        assertEquals(spherical1ToCartesian1.getY(), cartesianCoordinate1.getY(), 1e-15);
+        assertEquals(spherical1ToCartesian1.getZ(), cartesianCoordinate1.getZ(), 1e-15);
+
+        assertEquals(spherical2ToCartesian2.getX(), cartesianCoordinate2.getX(), 1e-15);
+        assertEquals(spherical2ToCartesian2.getY(), cartesianCoordinate2.getY(), 1e-15);
+        assertEquals(spherical2ToCartesian2.getZ(), cartesianCoordinate2.getZ(), 1e-15);
+
+        assertEquals(spherical3ToCartesian3.getX(), cartesianCoordinate3.getX(), 1e-15);
+        assertEquals(spherical3ToCartesian3.getY(), cartesianCoordinate3.getY(), 1e-15);
+        assertEquals(spherical3ToCartesian3.getZ(), cartesianCoordinate3.getZ(), 1e-15);
     }
 
     @Test
     public void testEquality() {
+        //Arrange
         SphericalCoordinate sphericalCoordinate1 = new SphericalCoordinate(1, Math.PI/ 2, Math.PI/2); // [0,1,0]
         SphericalCoordinate sphericalCoordinate2 = new SphericalCoordinate(1, 0, Math.PI / 2); // [1,0,0]
         SphericalCoordinate sphericalCoordinate3 = new SphericalCoordinate(1, 0,0); // [0,0,1]
-        CartesianCoordinate cartesianCoordinate1 = new CartesianCoordinate(0,1,0);
-        CartesianCoordinate cartesianCoordinate2 = new CartesianCoordinate(1,0,0);
-        CartesianCoordinate cartesianCoordinate3 = new CartesianCoordinate(0,0,1);
+
+        //Act
+
+        //Assert
         assertEquals(sphericalCoordinate1, sphericalCoordinate1);
-        assertEquals(cartesianCoordinate1.asSphericalCoordinate(), sphericalCoordinate1);
-        assertEquals(cartesianCoordinate2.asSphericalCoordinate(), sphericalCoordinate2);
-        assertEquals(cartesianCoordinate3.asSphericalCoordinate(), sphericalCoordinate3);
+        assertEquals(sphericalCoordinate2, sphericalCoordinate2);
+        assertEquals(sphericalCoordinate3, sphericalCoordinate3);
+
+        assertNotEquals(sphericalCoordinate1, sphericalCoordinate2);
+        assertNotEquals(sphericalCoordinate3, sphericalCoordinate1);
+        assertNotEquals(sphericalCoordinate2, sphericalCoordinate3);
+
+        assertNotEquals(sphericalCoordinate1, null);
     }
 }

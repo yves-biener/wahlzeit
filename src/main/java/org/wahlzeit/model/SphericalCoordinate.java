@@ -2,7 +2,7 @@ package org.wahlzeit.model;
 
 import java.util.Objects;
 
-public class SphericalCoordinate implements ICoordinate {
+public class SphericalCoordinate extends AbstractCoordinate {
     /**
      * Constructor of this class
      */
@@ -18,17 +18,35 @@ public class SphericalCoordinate implements ICoordinate {
     private double r, q, p;
 
     /**
-     * Internal implementation for getCentralAngel
-     * @param coordinate spherical coordinate to calculate the angle to
-     * @return angle between this and coordinate
+     * getter for p
+     *
+     * @return p
      */
-    private double doGetCentralAngle(ICoordinate coordinate) {
-        double chord = this.asCartesianCoordinate().getCartesianDistance(coordinate);
-        return 2 * Math.asin(chord/2);
+    public double getP() {
+        return p;
+    }
+
+    /**
+     * getter for q
+     *
+     * @return q
+     */
+    public double getQ() {
+        return q;
+    }
+
+    /**
+     * getter for r
+     *
+     * @return r
+     */
+    public double getR() {
+        return r;
     }
 
     /**
      * Convert this coordinate to cartesian coordinate
+     *
      * @return cartesian coordinate describing the same point
      */
     @Override
@@ -40,34 +58,13 @@ public class SphericalCoordinate implements ICoordinate {
     }
 
     /**
-     * Calculate the distance between two cartesian coordinates
-     * @param coordinate coordinate to calculate the distance to
-     * @return distance between this and coordinate
-     */
-    @Override
-    public double getCartesianDistance(ICoordinate coordinate) {
-        if (coordinate == null) throw new IllegalArgumentException("the other Coordinates can not be null");
-        return this.asCartesianCoordinate().getCartesianDistance(coordinate.asCartesianCoordinate());
-    }
-
-    /**
      * Convert this coordinate to spherical coordinate
+     *
      * @return spherical coordinate representing the same point
      */
     @Override
     public SphericalCoordinate asSphericalCoordinate() {
         return this;
-    }
-
-    /**
-     * Calculate the central angle between two coordinates
-     * @param coordinate coordinate to compare calculate the angle to
-     * @return central angel between this and coordinate
-     */
-    @Override
-    public double getCentralAngle(ICoordinate coordinate) {
-        if (coordinate == null) throw new IllegalArgumentException("the other Coordinates can not be null");
-        return doGetCentralAngle(coordinate.asSphericalCoordinate());
     }
 
     /**
@@ -84,18 +81,7 @@ public class SphericalCoordinate implements ICoordinate {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (this == obj) return true;
-        if (obj instanceof ICoordinate) {
-            return this.isEqual((ICoordinate) obj);
-        } else {
-            return false;
-        }
-    }
-
-    @Override
     public int hashCode() {
-        return Objects.hash(r, q, p);
+        return Objects.hash(getR(), getQ(), getP());
     }
 }
