@@ -9,14 +9,52 @@ import static org.junit.Assert.*;
  */
 public class CartesianCoordinateTest {
     @Test
+    public void testAssertClassInvariants() {
+        //Arrange
+        CartesianCoordinate cartesianCoordinate1 = new CartesianCoordinate(0, 0, 0);
+
+        CartesianCoordinate cartesianCoordinate2 = new CartesianCoordinate(Double.MAX_VALUE, 0, 0);
+        CartesianCoordinate cartesianCoordinate3 = new CartesianCoordinate(0, Double.MAX_VALUE, 0);
+        CartesianCoordinate cartesianCoordinate4 = new CartesianCoordinate(0, 0, Double.MAX_VALUE);
+
+        CartesianCoordinate cartesianCoordinate5 = new CartesianCoordinate(Double.MIN_VALUE, 0, 0);
+        CartesianCoordinate cartesianCoordinate6 = new CartesianCoordinate(0, Double.MIN_VALUE, 0);
+        CartesianCoordinate cartesianCoordinate7 = new CartesianCoordinate(0, 0, Double.MIN_VALUE);
+
+        //Act
+        cartesianCoordinate1.assertClassInvariants();
+        cartesianCoordinate2.assertClassInvariants();
+        cartesianCoordinate3.assertClassInvariants();
+        cartesianCoordinate4.assertClassInvariants();
+        cartesianCoordinate5.assertClassInvariants();
+        cartesianCoordinate6.assertClassInvariants();
+        cartesianCoordinate7.assertClassInvariants();
+
+        //Assert
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testAssertClassInvariantsWithNaN() {
+        //Arrange
+        CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(Double.NaN, 1, 2);
+
+        //Act
+        cartesianCoordinate.assertClassInvariants();
+
+        //Assert
+    }
+
+    @Test
     public void testAsSphericalCoordinate() {
         //Arrange
-        CartesianCoordinate cartesianCoordinate1 = new CartesianCoordinate(0,0,0);
-        SphericalCoordinate sphericalCoordinate1 = new SphericalCoordinate(0,0,0);
-        CartesianCoordinate cartesianCoordinate2 = new CartesianCoordinate(0,1,0);
+        CartesianCoordinate cartesianCoordinate1 = new CartesianCoordinate(0, 0, 0);
+        SphericalCoordinate sphericalCoordinate1 = new SphericalCoordinate(0, 0, 0);
+
+        CartesianCoordinate cartesianCoordinate2 = new CartesianCoordinate(0, 1, 0);
         SphericalCoordinate sphericalCoordinate2 = new SphericalCoordinate(1, Math.PI / 2, Math.PI / 2);
-        CartesianCoordinate cartesianCoordinate3 = new CartesianCoordinate(1, 0,0);
-        SphericalCoordinate sphericalCoordinate3 = new SphericalCoordinate(1, 0,Math.PI / 2);
+
+        CartesianCoordinate cartesianCoordinate3 = new CartesianCoordinate(1, 0, 0);
+        SphericalCoordinate sphericalCoordinate3 = new SphericalCoordinate(1, 0, Math.PI / 2);
 
         //Act
         SphericalCoordinate cartesian1ToSpherical1 = cartesianCoordinate1.asSphericalCoordinate();
@@ -37,8 +75,8 @@ public class CartesianCoordinateTest {
     @Test
     public void testEquality() {
         //Arrange
-        CartesianCoordinate cartesianCoordinate1 = new CartesianCoordinate(1,2,3);
-        CartesianCoordinate cartesianCoordinate2 = new CartesianCoordinate(1,2,1);
+        CartesianCoordinate cartesianCoordinate1 = new CartesianCoordinate(1, 2, 3);
+        CartesianCoordinate cartesianCoordinate2 = new CartesianCoordinate(1, 2, 1);
 
         //Act
 

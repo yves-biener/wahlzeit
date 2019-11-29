@@ -9,15 +9,89 @@ import static org.junit.Assert.*;
  */
 public class SphericalCoordinateTest {
     @Test
+    public void testAssertClassInvariants() {
+        //Arrange
+        SphericalCoordinate sphericalCoordinate1 = new SphericalCoordinate(0, 0, 0);
+        SphericalCoordinate sphericalCoordinate2 = new SphericalCoordinate(Double.MAX_VALUE, 0, 0);
+
+        SphericalCoordinate sphericalCoordinate3 = new SphericalCoordinate(0, 0, 2 * Math.PI);
+
+        SphericalCoordinate sphericalCoordinate4 = new SphericalCoordinate(0, Math.PI, 0);
+
+        //Act
+        sphericalCoordinate1.assertClassInvariants();
+        sphericalCoordinate2.assertClassInvariants();
+        sphericalCoordinate3.assertClassInvariants();
+        sphericalCoordinate4.assertClassInvariants();
+
+        //Assert
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testAssertClassInvariantsWithNaN() {
+        //Arrange
+        SphericalCoordinate sphericalCoordinate = new SphericalCoordinate(Double.NaN, 0, 0);
+
+        //Act
+        sphericalCoordinate.assertClassInvariants();
+
+        //Assert
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testAssertClassInvariantsWithQNegative() {
+        //Arrange
+        SphericalCoordinate sphericalCoordinate = new SphericalCoordinate(0, -42, 0);
+
+        //Act
+        sphericalCoordinate.assertClassInvariants();
+
+        //Assert
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testAssertClassInvariantsWithQGreaterThanPI() {
+        //Arrange
+        SphericalCoordinate sphericalCoordinate = new SphericalCoordinate(0, 666, 0);
+
+        //Act
+        sphericalCoordinate.assertClassInvariants();
+
+        //Assert
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testAssertClassInvariantsWithPNegative() {
+        //Arrange
+        SphericalCoordinate sphericalCoordinate = new SphericalCoordinate(0, 0, -17.24);
+
+        //Act
+        sphericalCoordinate.assertClassInvariants();
+
+        //Assert
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testAssertClassInvariantsWithPGreaterThen2PI() {
+        //Arrange
+        SphericalCoordinate sphericalCoordinate = new SphericalCoordinate(0, 0, 0x420b);
+
+        //Act
+        sphericalCoordinate.assertClassInvariants();
+
+        //Assert
+    }
+
+    @Test
     public void testAsCartesianCoordinate() {
         //Arrange
-        SphericalCoordinate sphericalCoordinate1 = new SphericalCoordinate(1, Math.PI/ 2, Math.PI/2); // [0,1,0]
+        SphericalCoordinate sphericalCoordinate1 = new SphericalCoordinate(1, Math.PI / 2, Math.PI / 2); // [0,1,0]
         SphericalCoordinate sphericalCoordinate2 = new SphericalCoordinate(1, 0, Math.PI / 2); // [1,0,0]
-        SphericalCoordinate sphericalCoordinate3 = new SphericalCoordinate(1, 0,0); // [0,0,1]
+        SphericalCoordinate sphericalCoordinate3 = new SphericalCoordinate(1, 0, 0); // [0,0,1]
 
-        CartesianCoordinate cartesianCoordinate1 = new CartesianCoordinate(0,1,0);
-        CartesianCoordinate cartesianCoordinate2 = new CartesianCoordinate(1,0,0);
-        CartesianCoordinate cartesianCoordinate3 = new CartesianCoordinate(0,0,1);
+        CartesianCoordinate cartesianCoordinate1 = new CartesianCoordinate(0, 1, 0);
+        CartesianCoordinate cartesianCoordinate2 = new CartesianCoordinate(1, 0, 0);
+        CartesianCoordinate cartesianCoordinate3 = new CartesianCoordinate(0, 0, 1);
 
         //Act
         CartesianCoordinate spherical1ToCartesian1 = sphericalCoordinate1.asCartesianCoordinate();
@@ -41,9 +115,9 @@ public class SphericalCoordinateTest {
     @Test
     public void testEquality() {
         //Arrange
-        SphericalCoordinate sphericalCoordinate1 = new SphericalCoordinate(1, Math.PI/ 2, Math.PI/2); // [0,1,0]
+        SphericalCoordinate sphericalCoordinate1 = new SphericalCoordinate(1, Math.PI / 2, Math.PI / 2); // [0,1,0]
         SphericalCoordinate sphericalCoordinate2 = new SphericalCoordinate(1, 0, Math.PI / 2); // [1,0,0]
-        SphericalCoordinate sphericalCoordinate3 = new SphericalCoordinate(1, 0,0); // [0,0,1]
+        SphericalCoordinate sphericalCoordinate3 = new SphericalCoordinate(1, 0, 0); // [0,0,1]
 
         //Act
 

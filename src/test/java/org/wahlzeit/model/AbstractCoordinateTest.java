@@ -9,6 +9,29 @@ import static org.junit.Assert.*;
  */
 public class AbstractCoordinateTest {
     @Test
+    public void testAssertNotNullArgument() {
+        //Arrange
+        CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(0,0,0);
+
+        //Act
+        cartesianCoordinate.assertNotNullArgument(new Object());
+        cartesianCoordinate.assertNotNullArgument(cartesianCoordinate);
+
+        //Assert
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAssertNotNullArgumentWithNull() {
+        //Arrange
+        CartesianCoordinate cartesianCoordinate = new CartesianCoordinate(0,0,0);
+
+        //Act
+        cartesianCoordinate.assertNotNullArgument(null);
+
+        //Assert
+    }
+
+    @Test
     public void testCartesianDistance() {
         //Arrange
         CartesianCoordinate cartesianCoordinate1 = new CartesianCoordinate(0,0,3);

@@ -5,11 +5,15 @@ import java.util.Objects;
 public class SphericalCoordinate extends AbstractCoordinate {
     /**
      * Constructor of this class
+     *
+     * @throws IllegalStateException
      */
-    public SphericalCoordinate(double r, double q, double p) {
+    public SphericalCoordinate(double r, double q, double p) throws IllegalStateException {
         this.r = r;
         this.q = q;
         this.p = p;
+
+        assertClassInvariants();
     }
 
     /**
@@ -18,7 +22,28 @@ public class SphericalCoordinate extends AbstractCoordinate {
     private double r, q, p;
 
     /**
+     * test if instance is in valid state
+     *
+     * @throws IllegalStateException
+     */
+    @Override
+    protected void assertClassInvariants() {
+        if (Double.isNaN(r) || Double.isNaN(q) || Double.isNaN(p))
+            throw new IllegalStateException("r, q, p are not allowed to be NaN");
+
+        if (r < 0)
+            throw new IllegalStateException("the radius has to be greater or equals 0 but was: " + r);
+
+        if (q < 0 || (q - Math.PI) > EPSILON)
+            throw new IllegalStateException("q has to be between 0 (including) and 180°/PI (including) but was: " + q);
+
+        if (p < 0 || (p - 2 * Math.PI) > EPSILON)
+            throw new IllegalStateException("p has to be between 0 (including) and 360°/2*PI (including) but was: " + p);
+    }
+
+    /**
      * getter for p
+     * 0 <= p <= 2*PI
      *
      * @return p
      */
@@ -28,6 +53,7 @@ public class SphericalCoordinate extends AbstractCoordinate {
 
     /**
      * getter for q
+     * 0 <= q <= PI
      *
      * @return q
      */
@@ -37,6 +63,7 @@ public class SphericalCoordinate extends AbstractCoordinate {
 
     /**
      * getter for r
+     * r >= 0
      *
      * @return r
      */
@@ -48,9 +75,12 @@ public class SphericalCoordinate extends AbstractCoordinate {
      * Convert this coordinate to cartesian coordinate
      *
      * @return cartesian coordinate describing the same point
+     * @throws IllegalStateException
      */
     @Override
-    public CartesianCoordinate asCartesianCoordinate() {
+    public CartesianCoordinate asCartesianCoordinate() throws IllegalStateException {
+        assertClassInvariants();
+
         double x = r * Math.sin(p) * Math.cos(q);
         double y = r * Math.sin(p) * Math.sin(q);
         double z = r * Math.cos(p);
@@ -61,9 +91,11 @@ public class SphericalCoordinate extends AbstractCoordinate {
      * Convert this coordinate to spherical coordinate
      *
      * @return spherical coordinate representing the same point
+     * @throws IllegalStateException
      */
     @Override
-    public SphericalCoordinate asSphericalCoordinate() {
+    public SphericalCoordinate asSphericalCoordinate() throws IllegalStateException {
+        assertClassInvariants();
         return this;
     }
 
@@ -72,16 +104,29 @@ public class SphericalCoordinate extends AbstractCoordinate {
      *
      * @param coordinate coordinate to compare against
      * @return true if r, q and p are all equal to each other
+     * @throws IllegalArgumentException
+     * @throws IllegalStateException
      */
     @Override
-    public boolean isEqual(ICoordinate coordinate) {
+    public boolean isEqual(ICoordinate coordinate) throws IllegalArgumentException, IllegalStateException {
+        assertNotNullArgument(coordinate);
+        assertClassInvariants();
+
         SphericalCoordinate that = coordinate.asSphericalCoordinate();
-        double epsilon = 1e-15;
-        return Math.abs(that.r - r) <= epsilon && Math.abs(that.q - q) <= epsilon && Math.abs(that.p - p) <= epsilon;
+        return Math.abs(that.r - r) <= EPSILON &&
+                Math.abs(that.q - q) <= EPSILON &&
+                Math.abs(that.p - p) <= EPSILON;
     }
 
+    /**
+     * hashCode method for java internal structures
+     *
+     * @return hashCode for this instance
+     * @throws IllegalStateException
+     */
     @Override
-    public int hashCode() {
-        return Objects.hash(getR(), getQ(), getP());
+    public int hashCode() throws IllegalStateException {
+        assertClassInvariants();
+        return Objects.hash(r, q, p);
     }
 }
