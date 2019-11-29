@@ -22,6 +22,18 @@ public class SphericalCoordinate extends AbstractCoordinate {
     private double r, q, p;
 
     /**
+     * implementation of asCartesianCoordinate
+     *
+     * @return CartesianCoordinate representing this instance (representing the same point in space)
+     */
+    private CartesianCoordinate doAsCartesianCoordinate() {
+        double x = r * Math.sin(p) * Math.cos(q);
+        double y = r * Math.sin(p) * Math.sin(q);
+        double z = r * Math.cos(p);
+        return new CartesianCoordinate(x, y, z);
+    }
+
+    /**
      * test if instance is in valid state
      *
      * @throws IllegalStateException
@@ -81,10 +93,7 @@ public class SphericalCoordinate extends AbstractCoordinate {
     public CartesianCoordinate asCartesianCoordinate() throws IllegalStateException {
         assertClassInvariants();
 
-        double x = r * Math.sin(p) * Math.cos(q);
-        double y = r * Math.sin(p) * Math.sin(q);
-        double z = r * Math.cos(p);
-        return new CartesianCoordinate(x, y, z);
+        return doAsCartesianCoordinate();
     }
 
     /**
