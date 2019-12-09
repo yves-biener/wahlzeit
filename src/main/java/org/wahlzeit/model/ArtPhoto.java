@@ -235,37 +235,74 @@ public class ArtPhoto extends Photo {
         return super.getLocation();
     }
 
-    /**
-     * Extension start
-     */
+    /*
+       Extension start
+    */
 
+    /**
+     * test if class is in valid state
+     *
+     * @throws IllegalStateException
+     */
+    private void assertClassInvariants() throws IllegalStateException {
+        if (this.creationDate != null && this.artist != null) {
+            Date dateOfBirth = artist.getDateOfBirth();
+            Date dateOfDeath = artist.getDateOfDeath();
+            if (dateOfBirth.after(creationDate)) {
+                throw new IllegalStateException("The creation date of the art cannot be before the associated artists birth. " +
+                        "Date of creation: " + creationDate.toString() + " | Date of birth: " + dateOfBirth.toString());
+            }
+            if (dateOfDeath.before(creationDate)) {
+                throw new IllegalStateException("The creation date of the art cannot be after the associated artists death. " +
+                        "Date of creation: " + creationDate.toString() + " | Date of death: " + dateOfDeath.toString());
+            }
+        }
+    }
+
+    /**
+     * getter for the artist associated with this art photo
+     * value can be null if the artist is unknown
+     *
+     * @return artist of the art if known else null
+     */
     public Artist getArtist() {
         return this.artist;
     }
 
-    public void setArtist(Artist artist) {
+    /**
+     * setter for the artist associated with this art photo
+     * value can be null if the artist is unknown
+     *
+     * @param artist artist of this art if known else null
+     */
+    public void setArtist(Artist artist) throws IllegalStateException {
         this.artist = artist;
+        assertClassInvariants();
     }
 
+    /**
+     * getter for the date of creation of the art shown in the photo
+     * this is not the time when this photo was uploaded
+     *
+     * @return date of creation of the artwork represented by this photo
+     */
     public Date getCreationDate() {
         return this.creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
-        if (creationDate == null) {
-            this.creationDate = null;
-            return;
-        }
-
-        if (this.artist.getDateOfBirth().before(creationDate))
-            if (this.artist.getDateOfDeath().after(creationDate)) {
-                this.creationDate = creationDate;
-                return;
-            }
-        throw new IllegalArgumentException("The creation date of this ArtPhoto cannot be before and after the lifetime of the artist");
+    /**
+     * setter for the date of creation of the art shown in the photo
+     * this is not the time when this photo was uploaded
+     *
+     * @param creationDate
+     * @throws IllegalStateException
+     */
+    public void setCreationDate(Date creationDate) throws IllegalStateException {
+        this.creationDate = creationDate;
+        assertClassInvariants();
     }
 
-    /**
-     * Extension end
-     */
+    /*
+       Extension end
+    */
 }

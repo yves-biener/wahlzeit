@@ -48,8 +48,9 @@ public abstract class AbstractCoordinate implements ICoordinate {
     /**
      * assertion for an implementing class to check the state of the class
      * will throw IllegalStateException if state of class is not valid
+     * @throws IllegalStateException
      */
-    protected abstract void assertClassInvariants();
+    protected abstract void assertClassInvariants() throws IllegalStateException;
 
     @Override
     public CartesianCoordinate asCartesianCoordinate() throws IllegalStateException {

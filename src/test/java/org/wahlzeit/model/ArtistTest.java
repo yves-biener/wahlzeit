@@ -11,49 +11,61 @@ import static junit.framework.TestCase.assertNull;
 
 public class ArtistTest {
 
-    Artist artist;
-    Date dateOfBirth = new Date(1800, Calendar.JANUARY, 8);
-    Date dateOfDeath = new Date(1890, Calendar.SEPTEMBER, 14);
+    private Artist artist;
 
     @Before
     public void initArtistTest() {
-        artist = new Artist("Test", dateOfBirth, dateOfDeath);
+        artist = new Artist("Test");
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = IllegalStateException.class)
     public void testArtistConstructor() {
+        //Arrange
+        Date dateOfBirth = new Date(1800, Calendar.JANUARY, 8);
+        Date dateOfDeath = new Date(1890, Calendar.SEPTEMBER, 14);
+
+        //Act
         artist = new Artist("Test", dateOfDeath, dateOfBirth);
+
+        //Assert
     }
 
     @Test
-    public void testSetDateOfBirthValid() {
-        Date newDateOfBirth = new Date(1800, Calendar.JANUARY, 15);
-        artist.setDateOfBirth(newDateOfBirth);
-        assertEquals(artist.getDateOfBirth(), newDateOfBirth);
-        artist.setDateOfBirth(null);
+    public void testSetLiveDataKnownDates() {
+        //Arrange
+        Date dateOfBirth = new Date(1800, Calendar.JANUARY, 15);
+        Date dateOfDeath = new Date(1889, Calendar.JULY, 12);
+
+        //Act
+        artist.setLiveData(dateOfBirth, dateOfDeath);
+
+        //Assert
+        assertEquals(artist.getDateOfDeath(), dateOfDeath);
+        assertEquals(artist.getDateOfBirth(), dateOfBirth);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void testSetLiveDataInvalidState() {
+        //Arrange
+        Date dateOfBirth = new Date(1800, Calendar.JANUARY, 15);
+        Date dateOfDeath = new Date(1889, Calendar.JULY, 12);
+
+        //Act
+        artist.setLiveData(dateOfDeath, dateOfBirth);
+
+        //Assert
+        assertEquals(artist.getDateOfDeath(), dateOfBirth);
+        assertEquals(artist.getDateOfBirth(), dateOfDeath);
+    }
+
+    @Test
+    public void testSetLiveDataWithNull() {
+        //Arrange
+
+        //Act
+
+        //Assert
         assertNull(artist.getDateOfBirth());
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testSetDateOfBirthInvalid() {
-        Date newDateOfBirth = new Date(1890, Calendar.DECEMBER, 8);
-        artist.setDateOfBirth(newDateOfBirth);
-    }
-
-    @Test
-    public void testSetDateOfDeathValid() {
-        Date newDateOfDeath = new Date(1889, Calendar.JULY, 12);
-        artist.setDateOfDeath(newDateOfDeath);
-        assertEquals(artist.getDateOfDeath(), newDateOfDeath);
-        artist.setDateOfDeath(null);
         assertNull(artist.getDateOfDeath());
     }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testSetDateOfDeathInvalid() {
-        Date newDateOfDeath = new Date(1780, Calendar.MAY, 24);
-        artist.setDateOfDeath(newDateOfDeath);
-    }
-
-
 }

@@ -34,7 +34,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
     }
 
     /**
-     * test if instance if in valid state
+     * test if instance is in valid state
      *
      * @throws IllegalStateException
      */

@@ -4,12 +4,11 @@ public class Location {
     /**
      * Constructor of this class
      *
-     * @param name
-     * @param coordinate
+     * @param name name of the location
+     * @param coordinate coordinates for this location
      */
     public Location(String name, ICoordinate coordinate) {
         this.name = name;
-        if (coordinate == null) throw new IllegalArgumentException("Coordiante can not be null");
         this.coordinate = coordinate;
     }
 
@@ -46,8 +45,10 @@ public class Location {
 
     /**
      * setter of this Location's Coordinate
+     *
+     * @throws IllegalArgumentException
      */
-    public void setCoordinate(ICoordinate coordinate) {
+    public void setCoordinate(ICoordinate coordinate) throws IllegalArgumentException {
         if (coordinate == null) throw new IllegalArgumentException("Coordiante can not be null");
         this.coordinate = coordinate;
     }

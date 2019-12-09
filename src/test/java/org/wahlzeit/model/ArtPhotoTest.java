@@ -11,49 +11,70 @@ import static junit.framework.TestCase.assertEquals;
 public class ArtPhotoTest {
 
     private ArtPhoto artPhoto;
-    Date dateOfBirth = new Date(1800, Calendar.JANUARY, 8);
-    Date dateOfDeath = new Date(1890, Calendar.SEPTEMBER, 14);
+    private Date dateOfBirth = new Date(1800, Calendar.JANUARY, 8);
+    private Date dateOfDeath = new Date(1890, Calendar.SEPTEMBER, 14);
 
     @Before
     public void initArtPhoto() {
-        Artist testArtist = new Artist();
-        testArtist.setDateOfBirth(dateOfBirth);
-        testArtist.setDateOfDeath(dateOfDeath);
+        Artist testArtist = new Artist("TestArtist", dateOfBirth, dateOfDeath);
         artPhoto = new ArtPhoto(testArtist);
     }
 
     @Test
     public void testArtPhotoSetCreationTime() {
+        //Arrange
         Date testDate = new Date(1840, Calendar.JANUARY, 1);
-        Date shortlyAfterBirth = new Date(1800, Calendar.JANUARY, 9);
+
+        //Act
         artPhoto.setCreationDate(testDate);
-        assertEquals(artPhoto.getCreationDate(), testDate);
+
+        //Assert
+        assertEquals(testDate, artPhoto.getCreationDate());
+    }
+
+    @Test
+    public void testArtPhotoSetCreationTimeShortlyAfterBirth() {
+        //Arrange
+        Date shortlyAfterBirth = new Date(1800, Calendar.JANUARY, 9);
+
+        //Act
         artPhoto.setCreationDate(shortlyAfterBirth);
-        assertEquals(artPhoto.getCreationDate(), shortlyAfterBirth);
+
+        //Assert
+        assertEquals(shortlyAfterBirth, artPhoto.getCreationDate());
+    }
+
+    @Test
+    public void testArtPhotoSetCreationTimeShortlyBeforeDeath() {
+        //Arrange
         Date shortlyBeforeDeath = new Date(1890, Calendar.SEPTEMBER, 13);
+
+        //Act
         artPhoto.setCreationDate(shortlyBeforeDeath);
-        assertEquals(artPhoto.getCreationDate(), shortlyBeforeDeath);
+
+        //Assert
+        assertEquals(shortlyBeforeDeath, artPhoto.getCreationDate());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testArtPhotoSetCreationTimeOnBirth() {
-        artPhoto.setCreationDate(dateOfBirth);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testArtPhotoSetCreationTimeOnDeath() {
-        artPhoto.setCreationDate(dateOfDeath);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = IllegalStateException.class)
     public void testArtPhotoSetCreationTimeBeforeBirth() {
+        //Arrange
         Date beforeBirth = new Date(1700, Calendar.SEPTEMBER, 3);
+
+        //Act
         artPhoto.setCreationDate(beforeBirth);
+
+        //Assert
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = IllegalStateException.class)
     public void testArtPhotoSetCreationTimeAfterDeath() {
+        //Arrange
         Date afterDeath = new Date(2000, Calendar.JANUARY, 12);
+
+        //Act
         artPhoto.setCreationDate(afterDeath);
+
+        //Assert
     }
 }

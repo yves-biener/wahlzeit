@@ -426,6 +426,8 @@ public class Photo extends DataObject {
 
 	/**
 	 * set the location of this photo
+	 * location value can be null if the location of the artwork is unknown
+	 *
 	 * @param location of this photo's instance
 	 */
 	public void setLocation(Location location) {
@@ -434,7 +436,8 @@ public class Photo extends DataObject {
 
 	/**
 	 * get Location of this Photo
-	 * @return Location
+	 *
+	 * @return Location if known else null
 	 */
 	public Location getLocation() {
 		return location;
