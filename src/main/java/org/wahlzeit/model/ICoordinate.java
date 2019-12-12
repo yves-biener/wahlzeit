@@ -5,6 +5,5 @@ public interface ICoordinate {
     double getCartesianDistance(ICoordinate coordinate) throws IllegalArgumentException;
     SphericalCoordinate asSphericalCoordinate() throws IllegalStateException;
     double getCentralAngle(ICoordinate coordinate) throws IllegalArgumentException;
-    boolean isEqual(ICoordinate coordinate) throws IllegalArgumentException, IllegalStateException;
-    boolean equals(Object obj);
+    boolean isEqual(ICoordinate coordinate) throws IllegalStateException;
 }

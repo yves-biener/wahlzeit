@@ -8,7 +8,7 @@ public class SphericalCoordinate extends AbstractCoordinate {
      *
      * @throws IllegalStateException
      */
-    public SphericalCoordinate(double r, double q, double p) throws IllegalStateException {
+    SphericalCoordinate(double r, double q, double p) throws IllegalStateException {
         this.r = r;
         this.q = q;
         this.p = p;
@@ -30,7 +30,7 @@ public class SphericalCoordinate extends AbstractCoordinate {
         double x = r * Math.sin(p) * Math.cos(q);
         double y = r * Math.sin(p) * Math.sin(q);
         double z = r * Math.cos(p);
-        return new CartesianCoordinate(x, y, z);
+        return CoordinateFactory.getInstance().getAsCartesianCoordinate(x, y, z);
     }
 
     /**
@@ -106,36 +106,5 @@ public class SphericalCoordinate extends AbstractCoordinate {
     public SphericalCoordinate asSphericalCoordinate() throws IllegalStateException {
         assertClassInvariants();
         return this;
-    }
-
-    /**
-     * Compare this Coordinate to other
-     *
-     * @param coordinate coordinate to compare against
-     * @return true if r, q and p are all equal to each other
-     * @throws IllegalArgumentException
-     * @throws IllegalStateException
-     */
-    @Override
-    public boolean isEqual(ICoordinate coordinate) throws IllegalArgumentException, IllegalStateException {
-        assertNotNullArgument(coordinate);
-        assertClassInvariants();
-
-        SphericalCoordinate that = coordinate.asSphericalCoordinate();
-        return Math.abs(that.r - r) <= EPSILON &&
-                Math.abs(that.q - q) <= EPSILON &&
-                Math.abs(that.p - p) <= EPSILON;
-    }
-
-    /**
-     * hashCode method for java internal structures
-     *
-     * @return hashCode for this instance
-     * @throws IllegalStateException
-     */
-    @Override
-    public int hashCode() throws IllegalStateException {
-        assertClassInvariants();
-        return Objects.hash(r, q, p);
     }
 }

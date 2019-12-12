@@ -85,13 +85,13 @@ public class SphericalCoordinateTest {
     @Test
     public void testAsCartesianCoordinate() {
         //Arrange
-        SphericalCoordinate sphericalCoordinate1 = new SphericalCoordinate(1, Math.PI / 2, Math.PI / 2); // [0,1,0]
-        SphericalCoordinate sphericalCoordinate2 = new SphericalCoordinate(1, 0, Math.PI / 2); // [1,0,0]
-        SphericalCoordinate sphericalCoordinate3 = new SphericalCoordinate(1, 0, 0); // [0,0,1]
+        SphericalCoordinate sphericalCoordinate1 = CoordinateFactory.getInstance().getAsSphericalCoordinate(1, Math.PI / 2, Math.PI / 2); // [0,1,0]
+        SphericalCoordinate sphericalCoordinate2 = CoordinateFactory.getInstance().getAsSphericalCoordinate(1, 0, Math.PI / 2); // [1,0,0]
+        SphericalCoordinate sphericalCoordinate3 = CoordinateFactory.getInstance().getAsSphericalCoordinate(1, 0, 0); // [0,0,1]
 
-        CartesianCoordinate cartesianCoordinate1 = new CartesianCoordinate(0, 1, 0);
-        CartesianCoordinate cartesianCoordinate2 = new CartesianCoordinate(1, 0, 0);
-        CartesianCoordinate cartesianCoordinate3 = new CartesianCoordinate(0, 0, 1);
+        CartesianCoordinate cartesianCoordinate1 = CoordinateFactory.getInstance().getAsCartesianCoordinate(0, 1, 0);
+        CartesianCoordinate cartesianCoordinate2 = CoordinateFactory.getInstance().getAsCartesianCoordinate(1, 0, 0);
+        CartesianCoordinate cartesianCoordinate3 = CoordinateFactory.getInstance().getAsCartesianCoordinate(0, 0, 1);
 
         //Act
         CartesianCoordinate spherical1ToCartesian1 = sphericalCoordinate1.asCartesianCoordinate();
@@ -115,9 +115,9 @@ public class SphericalCoordinateTest {
     @Test
     public void testEquality() {
         //Arrange
-        SphericalCoordinate sphericalCoordinate1 = new SphericalCoordinate(1, Math.PI / 2, Math.PI / 2); // [0,1,0]
-        SphericalCoordinate sphericalCoordinate2 = new SphericalCoordinate(1, 0, Math.PI / 2); // [1,0,0]
-        SphericalCoordinate sphericalCoordinate3 = new SphericalCoordinate(1, 0, 0); // [0,0,1]
+        SphericalCoordinate sphericalCoordinate1 = CoordinateFactory.getInstance().getAsSphericalCoordinate(1, Math.PI / 2, Math.PI / 2); // [0,1,0]
+        SphericalCoordinate sphericalCoordinate2 = CoordinateFactory.getInstance().getAsSphericalCoordinate(1, 0, Math.PI / 2); // [1,0,0]
+        SphericalCoordinate sphericalCoordinate3 = CoordinateFactory.getInstance().getAsSphericalCoordinate(1, 0, 0); // [0,0,1]
 
         //Act
 

@@ -8,7 +8,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
      *
      * @throws IllegalStateException
      */
-    public CartesianCoordinate(double x, double y, double z) throws IllegalStateException {
+    CartesianCoordinate(double x, double y, double z) throws IllegalStateException {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -30,7 +30,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         double r = getCartesianDistance(new CartesianCoordinate(0, 0, 0)), q, p = 0;
         q = Math.atan2(y, x);
         if (r != 0) p = Math.acos(z / r);
-        return new SphericalCoordinate(r, q, p);
+        return CoordinateFactory.getInstance().getAsSphericalCoordinate(r, q, p);
     }
 
     /**
@@ -94,36 +94,5 @@ public class CartesianCoordinate extends AbstractCoordinate {
         assertClassInvariants();
 
         return doAsSphericalCoordinate();
-    }
-
-    /**
-     * Compare this Coordinate to other
-     *
-     * @param coordinate coordinate to compare against
-     * @return true if x, y and z are all equal to each other
-     * @throws IllegalArgumentException
-     * @throws IllegalStateException
-     */
-    @Override
-    public boolean isEqual(ICoordinate coordinate) throws IllegalArgumentException, IllegalStateException {
-        assertNotNullArgument(coordinate);
-        assertClassInvariants();
-
-        CartesianCoordinate that = coordinate.asCartesianCoordinate();
-        return Math.abs(that.x - x) <= EPSILON &&
-                Math.abs(that.y - y) <= EPSILON &&
-                Math.abs(that.z - z) <= EPSILON;
-    }
-
-    /**
-     * hashCode method for java internal structures
-     *
-     * @return hashCode for this instance
-     * @throws IllegalStateException
-     */
-    @Override
-    public int hashCode() throws IllegalStateException {
-        assertClassInvariants();
-        return Objects.hash(x, y, z);
     }
 }

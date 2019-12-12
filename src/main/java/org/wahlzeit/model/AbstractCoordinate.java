@@ -27,9 +27,9 @@ public abstract class AbstractCoordinate implements ICoordinate {
     }
 
     /**
-     * Epsilon used for double-comparisons
+     * Epsilon used for double-comparisons used in preconditions, invariants etc.
      */
-    protected final double EPSILON = 1e-15;
+    final double EPSILON = 1e-15;
 
     /*  Preconditions  */
 
@@ -75,18 +75,24 @@ public abstract class AbstractCoordinate implements ICoordinate {
     }
 
     @Override
-    public boolean isEqual(ICoordinate coordinate) throws IllegalArgumentException, IllegalStateException {
+    public boolean isEqual(ICoordinate coordinate) throws IllegalStateException {
+        return this.asCartesianCoordinate() == coordinate.asCartesianCoordinate();
+    }
+
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof ICoordinate) {
+            return this.isEqual((ICoordinate) obj);
+        }
         return false;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (this == obj) return true;
-        if (obj instanceof AbstractCoordinate) {
-            return this.isEqual((ICoordinate) obj);
-        } else {
-            return false;
-        }
+    public int hashCode() {
+        return super.hashCode();
     }
 }
