@@ -1,5 +1,13 @@
 package org.wahlzeit.model;
 
+import org.wahlzeit.tools.annotations.PatternInstance;
+
+@PatternInstance(
+        patternName = "Abstract Factory",
+        participants = {
+                "AbstractProduct"
+        }
+)
 public abstract class AbstractCoordinate implements ICoordinate {
     /**
      * implementation for getCentralAngle

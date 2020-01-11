@@ -1,7 +1,13 @@
 package org.wahlzeit.model;
 
-import java.util.Objects;
+import org.wahlzeit.tools.annotations.PatternInstance;
 
+@PatternInstance(
+        patternName = "Abstract Factory",
+        participants = {
+                "ConcreteProduct"
+        }
+)
 public class CartesianCoordinate extends AbstractCoordinate {
     /**
      * Constructor of this class

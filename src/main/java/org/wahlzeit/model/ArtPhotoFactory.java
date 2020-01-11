@@ -1,9 +1,16 @@
 package org.wahlzeit.model;
 
 import org.wahlzeit.services.LogBuilder;
+import org.wahlzeit.tools.annotations.PatternInstance;
 
 import java.util.logging.Logger;
 
+@PatternInstance(
+        patternName = "Abstract Factory",
+        participants = {
+                "ConcreteFactory"
+        }
+)
 public class ArtPhotoFactory extends PhotoFactory {
 
     private static final Logger log = Logger.getLogger(ArtPhotoFactory.class.getName());

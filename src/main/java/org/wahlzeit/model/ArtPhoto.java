@@ -4,10 +4,17 @@ import com.google.appengine.api.images.Image;
 import com.googlecode.objectify.annotation.Entity;
 import org.wahlzeit.services.EmailAddress;
 import org.wahlzeit.services.Language;
+import org.wahlzeit.tools.annotations.PatternInstance;
 
 import java.util.Date;
 
 @Entity
+@PatternInstance(
+        patternName = "Abstract Factory",
+        participants = {
+                "ConcreteProduct"
+        }
+)
 public class ArtPhoto extends Photo {
 
     /**

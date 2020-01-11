@@ -1,10 +1,16 @@
 package org.wahlzeit.model;
 
-import java.util.ArrayList;
+import org.wahlzeit.tools.annotations.PatternInstance;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+@PatternInstance(
+        patternName = "Abstract Factory",
+        participants = {
+                "ConcreteFactory"
+        }
+)
 public class CoordinateFactory {
     /**
      * Singleton Pattern for this factory
@@ -24,25 +30,14 @@ public class CoordinateFactory {
     }
 
     /**
-     * check if the given list has the exact size of 3
-     *
-     * @param list list to check on
-     */
-    private void assertListSizeIs3(List list) {
-        if (list.size() != 3)
-            throw new IllegalStateException("Lists used for sharing the instances have to be of size 3. " +
-                    "But current size was: " + list.size());
-    }
-
-    /**
      * map for storing the shared instances of all used CartesianCoordinate instances
      */
-    private Map<List<Double>, CartesianCoordinate> sharedCartesianCoordinates;
+    private Map<String, CartesianCoordinate> sharedCartesianCoordinates;
 
     /**
      * map for storing the shared instances of all used SphericalCoordinate instances
      */
-    private Map<List<Double>, SphericalCoordinate> sharedSphericalCoordinates;
+    private Map<String, SphericalCoordinate> sharedSphericalCoordinates;
 
     /**
      * Getter for CartesianCoordinates
@@ -54,13 +49,19 @@ public class CoordinateFactory {
      * @throws IllegalStateException
      */
     public CartesianCoordinate getAsCartesianCoordinate(double x, double y, double z) throws IllegalStateException {
-        List<Double> coordinates = new ArrayList<Double>(3);
-        coordinates.add(x);
-        coordinates.add(y);
-        coordinates.add(z);
-        assertListSizeIs3(coordinates);
+        return doGetCartesianCoordinate(x, y, z);
+    }
 
-        return doGetCartesianCoordinate(coordinates);
+    /**
+     * Creates an unique String which used as a Key for the Maps
+     * So it's unique for each instance of a Coordinate object
+     * @param x or r
+     * @param y or q
+     * @param z or p
+     * @return String with created Key
+     */
+    private String createKeyForCoordinate(double x, double y, double z) {
+        return String.format("%f_%f_%f", x, y, z);
     }
 
     /**
@@ -73,30 +74,24 @@ public class CoordinateFactory {
      * @throws IllegalStateException
      */
     public SphericalCoordinate getAsSphericalCoordinate(double r, double q, double p) throws IllegalStateException {
-        List<Double> coordinates = new ArrayList<Double>(3);
-        coordinates.add(r);
-        coordinates.add(q);
-        coordinates.add(p);
-        assertListSizeIs3(coordinates);
-
-        return doGetSphericalCoordinate(coordinates);
+        return doGetSphericalCoordinate(r, q, p);
     }
 
     /**
      * Implementation of the look-up for the shared Cartesian Coordinate instances
      *
-     * @param coordinates key for the map used for the look-up
+     * @param x, y, z used coordinates
      * @return ether instance which was already used or new one which will be stored internally for sharing
      */
-    private CartesianCoordinate doGetCartesianCoordinate(List<Double> coordinates) {
-        CartesianCoordinate result = sharedCartesianCoordinates.get(coordinates);
+    private CartesianCoordinate doGetCartesianCoordinate(double x, double y, double z) {
+        CartesianCoordinate result = sharedCartesianCoordinates.get(createKeyForCoordinate(x, y, z));
         if (result == null) {
             synchronized (this) {
-                result = sharedCartesianCoordinates.get(coordinates);
+                result = sharedCartesianCoordinates.get(createKeyForCoordinate(x, y, z));
                 if (result == null) {
                     int mapSize = sharedCartesianCoordinates.size();
-                    result = new CartesianCoordinate(coordinates.get(0), coordinates.get(1), coordinates.get(2));
-                    sharedCartesianCoordinates.put(coordinates, result);
+                    result = new CartesianCoordinate(x, y, z);
+                    sharedCartesianCoordinates.put(createKeyForCoordinate(x, y, z), result);
                     assert mapSize + 1 == sharedCartesianCoordinates.size() : "adding a new element to the shared map failed.";
                 }
             }
@@ -107,18 +102,18 @@ public class CoordinateFactory {
     /**
      * Implementation of the look-up for the shared Spherical Coordinate instances
      *
-     * @param coordinates key for the map used for the look-up
+     * @param r, q, p used coordinates
      * @return ether instance which was already used or new one which will be stored internally for sharing
      */
-    private SphericalCoordinate doGetSphericalCoordinate(List<Double> coordinates) {
-        SphericalCoordinate result = sharedSphericalCoordinates.get(coordinates);
+    private SphericalCoordinate doGetSphericalCoordinate(double r, double q, double p) {
+        SphericalCoordinate result = sharedSphericalCoordinates.get(createKeyForCoordinate(r, q, p));
         if (result == null) {
             synchronized (this) {
-                result = sharedSphericalCoordinates.get(coordinates);
+                result = sharedSphericalCoordinates.get(createKeyForCoordinate(r, q, p));
                 if (result == null) {
                     int mapSize = sharedSphericalCoordinates.size();
-                    result = new SphericalCoordinate(coordinates.get(0), coordinates.get(1), coordinates.get(2));
-                    sharedSphericalCoordinates.put(coordinates, result);
+                    result = new SphericalCoordinate(r, q, p);
+                    sharedSphericalCoordinates.put(createKeyForCoordinate(r, q, p), result);
                     assert mapSize + 1 == sharedSphericalCoordinates.size() : "adding a new element to the shared map failed.";
                 }
             }

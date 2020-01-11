@@ -35,6 +35,7 @@ import org.wahlzeit.model.User;
 import org.wahlzeit.model.UserSession;
 import org.wahlzeit.services.LogBuilder;
 import org.wahlzeit.services.SessionManager;
+import org.wahlzeit.tools.annotations.PatternInstance;
 import org.wahlzeit.webparts.WebPart;
 
 import javax.servlet.ServletException;
@@ -52,6 +53,12 @@ import java.util.logging.Logger;
 /**
  * The main servlet class for handling incoming and outgoing requests.
  */
+@PatternInstance(
+		patternName = "Null Object Pattern",
+		participants = {
+				"ConcreteObject"
+		}
+)
 public class MainServlet extends AbstractServlet {
 
 	private static final Logger log = Logger.getLogger(MainServlet.class.getName());
