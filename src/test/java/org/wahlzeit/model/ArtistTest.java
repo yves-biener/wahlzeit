@@ -12,10 +12,11 @@ import static junit.framework.TestCase.assertNull;
 public class ArtistTest {
 
     private Artist artist;
+    private Epoch epoch;
 
     @Before
     public void initArtistTest() {
-        artist = new Artist("Test");
+        artist = new Artist(epoch, "Test");
     }
 
     @Test(expected = IllegalStateException.class)
@@ -25,7 +26,7 @@ public class ArtistTest {
         Date dateOfDeath = new Date(1890, Calendar.SEPTEMBER, 14);
 
         //Act
-        artist = new Artist("Test", dateOfDeath, dateOfBirth);
+        artist = new Artist(epoch ,"Test", dateOfDeath, dateOfBirth);
 
         //Assert
     }

@@ -1,8 +1,16 @@
 package org.wahlzeit.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 public class Artist {
+
+    /**
+     * Epochs this artist was active in
+     */
+    protected Set<Epoch> epochs;
 
     /**
      * Name of the artist
@@ -21,7 +29,7 @@ public class Artist {
      */
     private Date dateOfDeath;
 
-    //TODO: add Photo (id) of artist him-/herself
+    protected PhotoId artistPhotoId;
 
     /**
      * assertion for an argument to not be null
@@ -43,6 +51,10 @@ public class Artist {
             throw new IllegalStateException("An artist without name is now allowed.");
         }
 
+        if (epochs == null) {
+            throw new IllegalStateException("Uninitialized epoch set is now allowed.");
+        }
+
         if (dateOfDeath == null && dateOfBirth == null) {
             return;
         }
@@ -56,26 +68,44 @@ public class Artist {
                     "Date of birth: " + dateOfBirth.toString() + " | Date of death: " + dateOfDeath.toString());
     }
 
+    private void initEpochs(Epoch epoch) {
+        this.epochs = new HashSet<>();
+        this.epochs.add(epoch);
+    }
+
+    /**
+     * Constructor
+     * This constructor is creating a dummy Artist
+     *
+     * @param epoch epoch of the artist
+     */
+    public Artist(Epoch epoch) {
+        this(epoch, "Unknown Artist");
+    }
+
     /**
      * Constructor
      *
-     * @param name name of the artist
+     * @param epoch epoch of the artist
+     * @param name  name of the artist
      */
-    public Artist(String name) {
+    public Artist(Epoch epoch, String name) {
+        initEpochs(epoch);
         this.name = name;
-
         assertClassInvariants();
     }
 
     /**
      * Constructor
      *
-     * @param name name of the artist
+     * @param epoch       epoch of the artist
+     * @param name        name of the artist
      * @param dateOfBirth date of birth of the artist
      * @param dateOfDeath date of death of the artist
      * @throws IllegalArgumentException
      */
-    public Artist(String name, Date dateOfBirth, Date dateOfDeath) throws IllegalArgumentException {
+    public Artist(Epoch epoch, String name, Date dateOfBirth, Date dateOfDeath) throws IllegalArgumentException {
+        initEpochs(epoch);
         this.name = name;
         doSetLiveData(dateOfBirth, dateOfDeath);
         assertClassInvariants();
@@ -136,5 +166,21 @@ public class Artist {
     public void setLiveData(Date dateOfBirth, Date dateOfDeath) throws IllegalStateException {
         doSetLiveData(dateOfBirth, dateOfDeath);
         assertClassInvariants();
+    }
+
+    /**
+     * Getter for the PhotoId of the artist itself
+     * @return PhotoId
+     */
+    public PhotoId getId() {
+        return artistPhotoId;
+    }
+
+    /**
+     * Getter of the iterator for all epochs this artist created art
+     * @return Iterator\< Epoch \>
+     */
+    public Iterator<Epoch> getEpochs() {
+        return epochs.iterator();
     }
 }

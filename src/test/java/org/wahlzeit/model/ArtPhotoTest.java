@@ -11,12 +11,13 @@ import static junit.framework.TestCase.assertEquals;
 public class ArtPhotoTest {
 
     private ArtPhoto artPhoto;
+    private Epoch epoch = null;
     private Date dateOfBirth = new Date(1800, Calendar.JANUARY, 8);
     private Date dateOfDeath = new Date(1890, Calendar.SEPTEMBER, 14);
 
     @Before
     public void initArtPhoto() {
-        Artist testArtist = new Artist("TestArtist", dateOfBirth, dateOfDeath);
+        Artist testArtist = new Artist(epoch, "TestArtist", dateOfBirth, dateOfDeath);
         artPhoto = new ArtPhoto(testArtist);
     }
 
