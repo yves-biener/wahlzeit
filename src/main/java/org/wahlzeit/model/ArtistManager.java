@@ -66,4 +66,18 @@ public class ArtistManager extends ObjectManager {
         artists.put(artist.getId(), artist);
         return artist;
     }
+
+    /**
+     * Get an Instance of an artist created by this Manager via its PhotoId
+     * @param photoId PhotoId of an Artist / Photo to find the Artist
+     * @return Artist if photoId was valid
+     * @throws IllegalArgumentException if given PhotoId was not found in the map which means that the PhotoId was not used for creating an Artist
+     */
+    public Artist getArtistByPhotoId(PhotoId photoId) {
+        if (artists.containsKey(photoId)) {
+            return artists.get(photoId);
+        } else {
+            throw new IllegalArgumentException("Given PhotoId is not connected to an Artist");
+        }
+    }
 }

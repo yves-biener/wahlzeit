@@ -16,6 +16,8 @@ public class ArtPhotoFactory extends PhotoFactory {
     private static final Logger log = Logger.getLogger(ArtPhotoFactory.class.getName());
     private static ArtPhotoFactory instance = null;
 
+    protected ArtistManager artistManager = new ArtistManager();
+
     protected ArtPhotoFactory() { }
 
     /**
@@ -43,12 +45,14 @@ public class ArtPhotoFactory extends PhotoFactory {
 
     @Override
     public Photo createPhoto() {
-        return new ArtPhoto();
+        Artist artist = artistManager.createArtist("EpochLess");
+        return new ArtPhoto(artist);
     }
 
     @Override
     public Photo createPhoto(PhotoId id) {
-        return new ArtPhoto(id);
+        Artist artist = artistManager.createArtist("EpochLess");
+        return new ArtPhoto(id, artist);
     }
 
     @Override

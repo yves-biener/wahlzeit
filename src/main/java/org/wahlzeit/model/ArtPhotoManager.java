@@ -19,19 +19,19 @@ public class ArtPhotoManager extends PhotoManager {
     /**
      * In-memory cache for artPhotos
      */
-    protected Map<PhotoId, Photo> artPhotoMap = new HashMap<PhotoId, Photo>();
+    protected Map<PhotoId, ArtPhoto> artPhotoMap = new HashMap<PhotoId, ArtPhoto>();
 
     public ArtPhotoManager() {
         super.photoTagCollector = ArtPhotoFactory.getInstance().createPhotoTagCollector();
     }
 
     @Override
-    public Photo getPhotoFromId(PhotoId id) {
+    public ArtPhoto getPhotoFromId(PhotoId id) {
         if (id == null) {
             return null;
         }
 
-        ArtPhoto result = (ArtPhoto) doGetPhotoFromId(id);
+        ArtPhoto result = doGetPhotoFromId(id);
 
         if (result == null) {
             result = (ArtPhoto) ArtPhotoFactory.getInstance().loadPhoto(id);
@@ -44,13 +44,13 @@ public class ArtPhotoManager extends PhotoManager {
     }
 
     @Override
-    protected Photo doGetPhotoFromId(PhotoId id) {
+    protected ArtPhoto doGetPhotoFromId(PhotoId id) {
         return artPhotoMap.get(id);
     }
 
     @Override
     protected void doAddPhoto(Photo myPhoto) {
-        artPhotoMap.put(myPhoto.getId(), myPhoto);
+        artPhotoMap.put(myPhoto.getId(), (ArtPhoto) myPhoto);
     }
 
     @Override
@@ -60,28 +60,28 @@ public class ArtPhotoManager extends PhotoManager {
 
     @Override
     public void loadPhotos() {
-        Collection<Photo> existingPhotos = ObjectifyService.run(new Work<Collection<Photo>>() {
+        Collection<ArtPhoto> existingPhotos = ObjectifyService.run(new Work<Collection<ArtPhoto>>() {
             @Override
-            public Collection<Photo> run() {
-                Collection<Photo> existingPhotos = new ArrayList<Photo>();
-                readObjects(existingPhotos, Photo.class);
+            public Collection<ArtPhoto> run() {
+                Collection<ArtPhoto> existingPhotos = new ArrayList<ArtPhoto>();
+                readObjects(existingPhotos, ArtPhoto.class);
                 return existingPhotos;
             }
         });
 
-        for (Photo photo : existingPhotos) {
+        for (ArtPhoto photo : existingPhotos) {
             if (!doHasPhoto(photo.getId())) {
                 log.config(LogBuilder.createSystemMessage().
-                        addParameter("Load Photo with ID", photo.getIdAsString()).toString());
+                        addParameter("Load ArtPhoto with ID", photo.getId()).toString());
                 loadScaledImages(photo);
                 doAddPhoto(photo);
             } else {
                 log.config(LogBuilder.createSystemMessage().
-                        addParameter("Already loaded Photo", photo.getIdAsString()).toString());
+                        addParameter("Already loaded ArtPhoto", photo.getId()).toString());
             }
         }
 
-        log.info(LogBuilder.createSystemMessage().addMessage("All photos loaded.").toString());
+        log.info(LogBuilder.createSystemMessage().addMessage("All Artphotos loaded.").toString());
     }
 
     @Override
@@ -126,7 +126,12 @@ public class ArtPhotoManager extends PhotoManager {
 
     @Override
     public Map<PhotoId, Photo> getPhotoCache() {
-        return artPhotoMap;
+        Map<PhotoId, Photo> toReturn = new HashMap<>();
+        for (PhotoId id : artPhotoMap.keySet()) {
+            ArtPhoto artPhoto = artPhotoMap.get(id);
+            toReturn.put(id, (Photo) artPhoto);
+        }
+        return toReturn;
     }
 
     @Override
@@ -135,13 +140,13 @@ public class ArtPhotoManager extends PhotoManager {
     }
 
     @Override
-    public Photo getVisiblePhoto(PhotoFilter filter) {
+    public ArtPhoto getVisiblePhoto(PhotoFilter filter) {
         filter.generateDisplayablePhotoIds();
         return getPhotoFromId(filter.getRandomDisplayablePhotoId());
     }
 
     @Override
-    public Photo createPhoto(String filename, Image uploadedImage) throws Exception {
+    public ArtPhoto createPhoto(String filename, Image uploadedImage) throws Exception {
         PhotoId id = PhotoId.getNextId();
         ArtPhoto artPhoto = (ArtPhoto) PhotoUtil.createPhoto(filename, id, uploadedImage);
         addPhoto(artPhoto);
