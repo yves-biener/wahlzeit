@@ -39,6 +39,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         return CoordinateFactory.getInstance().getAsSphericalCoordinate(r, q, p);
     }
 
+    // AbstractCoordinate - CartesianCoordinate - Collaboration
     /**
      * test if instance is in valid state
      *
@@ -50,6 +51,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
             throw new IllegalStateException("X, Y, Z Coordinates are not allowed to be NaN");
     }
 
+    // AbstractCoordinate - CartesianCoordinate - Collaboration
     /**
      * getter for x
      *
@@ -59,6 +61,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         return x;
     }
 
+    // AbstractCoordinate - CartesianCoordinate - Collaboration
     /**
      * getter for y
      *
@@ -68,6 +71,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         return y;
     }
 
+    // AbstractCoordinate - CartesianCoordinate - Collaboration
     /**
      * getter for z
      *
@@ -77,6 +81,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         return z;
     }
 
+    // AbstractCoordinate - CartesianCoordinate - Collaboration
     /**
      * Convert this coordinate to cartesian coordinate
      *
@@ -89,6 +94,7 @@ public class CartesianCoordinate extends AbstractCoordinate {
         return this;
     }
 
+    // AbstractCoordinate - CartesianCoordinate - Collaboration
     /**
      * Convert this coordinate to spherical coordinate
      *

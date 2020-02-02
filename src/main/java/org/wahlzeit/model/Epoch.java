@@ -28,6 +28,7 @@ public abstract class Epoch extends DataObject {
 
     /**
      * Getter for the epoch hierarchically over this epoch
+     *
      * @return null if no epoch is over this one otherwise the corresponding epoch
      */
     public Epoch getSuperEpoch() {
@@ -36,6 +37,7 @@ public abstract class Epoch extends DataObject {
 
     /**
      * Getter for an iterator for iterating over all epochs hierarchically under this epoch
+     *
      * @return iterator for sub epochs
      */
     public Iterator<Epoch> getSubEpochIterator() {
@@ -45,6 +47,7 @@ public abstract class Epoch extends DataObject {
     /**
      * Add an Epoch as an epoch hierarchically under this one
      * This function also sets for the sub epoch the super epoch to this epoch
+     *
      * @param epoch Epoch to set as sub epoch of called epoch
      */
     public void addSubEpoch(Epoch epoch) {
@@ -55,6 +58,7 @@ public abstract class Epoch extends DataObject {
 
     /**
      * Setter for the epoch hierarchically over this epoch
+     *
      * @param epoch Epoch to set hierarchically over this epoch
      */
     protected void setSuperEpoch(Epoch epoch) {
@@ -64,6 +68,7 @@ public abstract class Epoch extends DataObject {
 
     /**
      * Check if given Epoch is sub epoch of this Epoch
+     *
      * @param epoch Epoch to look for
      * @return boolean if given Epoch is sub epoch
      */
@@ -78,8 +83,10 @@ public abstract class Epoch extends DataObject {
         }
     }
 
+    // Artist - Epoch - Collaboration
     /**
      * Create a new dummy Artist instance
+     *
      * @return dummy Artist instance
      */
     public Artist createInstance() {

@@ -1,5 +1,6 @@
 package org.wahlzeit.model;
 
+// Coordinate - Collaboration
 public interface ICoordinate {
     CartesianCoordinate asCartesianCoordinate() throws IllegalStateException;
     double getCartesianDistance(ICoordinate coordinate) throws IllegalArgumentException;

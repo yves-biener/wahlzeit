@@ -176,6 +176,7 @@ public class Artist {
         return artistPhotoId;
     }
 
+    // Artist - Epoch - Collaboration
     /**
      * Getter of the iterator for all epochs this artist created art
      * @return Iterator\< Epoch \>

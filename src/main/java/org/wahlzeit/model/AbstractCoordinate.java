@@ -9,6 +9,7 @@ import org.wahlzeit.tools.annotations.PatternInstance;
         }
 )
 public abstract class AbstractCoordinate implements ICoordinate {
+
     /**
      * implementation for getCentralAngle
      *
@@ -60,6 +61,7 @@ public abstract class AbstractCoordinate implements ICoordinate {
      */
     protected abstract void assertClassInvariants() throws IllegalStateException;
 
+    // AbstractCoordinate - CartesianCoordinate - Collaboration
     @Override
     public CartesianCoordinate asCartesianCoordinate() throws IllegalStateException {
         return null;
@@ -71,6 +73,7 @@ public abstract class AbstractCoordinate implements ICoordinate {
         return doGetCartesianDistance(coordinate);
     }
 
+    // AbstractCoordinate - SphericalCoordinate - Collaboration
     @Override
     public SphericalCoordinate asSphericalCoordinate() throws IllegalStateException {
         return null;

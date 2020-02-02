@@ -9,6 +9,7 @@ import org.wahlzeit.tools.annotations.PatternInstance;
         }
 )
 public class SphericalCoordinate extends AbstractCoordinate {
+
     /**
      * Constructor of this class
      *
@@ -39,6 +40,7 @@ public class SphericalCoordinate extends AbstractCoordinate {
         return CoordinateFactory.getInstance().getAsCartesianCoordinate(x, y, z);
     }
 
+    // AbstractCoordinate - SphericalCoordinate - Collaboration
     /**
      * test if instance is in valid state
      *
@@ -89,6 +91,7 @@ public class SphericalCoordinate extends AbstractCoordinate {
         return r;
     }
 
+    // AbstractCoordinate - SphericalCoordinate - Collaboration
     /**
      * Convert this coordinate to cartesian coordinate
      *
@@ -102,6 +105,7 @@ public class SphericalCoordinate extends AbstractCoordinate {
         return doAsCartesianCoordinate();
     }
 
+    // AbstractCoordinate - SphericalCoordinate - Collaboration
     /**
      * Convert this coordinate to spherical coordinate
      *
